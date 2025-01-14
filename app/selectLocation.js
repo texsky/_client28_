@@ -3,8 +3,8 @@ import { View, Text, SafeAreaView, TouchableOpacity, Dimensions } from "react-na
 import MapView, { Marker } from 'react-native-maps';
 import tw from "twrnc";
 import { router } from "expo-router";
-import { RadixIcon } from "radix-ui-react-native-icons";
 import * as Location from 'expo-location';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 
 /**
@@ -63,7 +63,7 @@ const selectLocation = () => {
             <SafeAreaView>
                 <View style={tw`flex flex-row items-center p-2 gap-4 pb-5`}>
                     <TouchableOpacity onPress={() => router.back()}>
-                        <RadixIcon name="chevron-left" size={25} color="black" />
+                    <AntDesign name="left" size={24} color="black" />
                     </TouchableOpacity>
                     <Text style={tw`font-bold text-xl`}>Select Location</Text>
                 </View>

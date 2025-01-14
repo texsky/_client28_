@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, SafeAreaView, TouchableOpacity, Image, Modal, StyleSheet, TextInput, Dimensions, Alert, ActivityIndicator } from "react-native";
-import { RadixIcon } from "radix-ui-react-native-icons";
 import tw from 'twrnc';
 import { router } from "expo-router";
 import { useLocalSearchParams } from 'expo-router';
@@ -11,6 +10,10 @@ import axios from "axios";
 import { BASE } from './api/base';
 import * as ImageManipulator from 'expo-image-manipulator';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+
 
 
 /**
@@ -327,19 +330,18 @@ const Placeorder = () => {
                         <View style={styles.modalContent}>
                             <View style={tw`flex flex-row items-center justify-center`}>
                                 <TouchableOpacity onPress={toggleModal}>
-                                    <RadixIcon name="minus" size={25} color="black" />
-                                </TouchableOpacity>
+                                <AntDesign name="minus" size={24} color="black" />                                </TouchableOpacity>
                             </View>
                             <View style={tw`flex flex-col gap-4`}>
                                 <TouchableOpacity onPress={() => UploadImage("Gallery")}>
                                     <View style={tw`flex flex-row items-center justify-start gap-4 px-3`}>
-                                        <RadixIcon name="image" size={25} color="black" />
+                                    <Feather name="image" size={24} color="black" />
                                         <Text>Upload from Gallery</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => UploadImage("Camera")}>
                                     <View style={tw`flex flex-row items-center justify-start gap-4 px-3`}>
-                                        <RadixIcon name="camera" size={25} color="black" />
+                                    <Feather name="camera" size={24} color="black" />
                                         <Text>Camera</Text>
                                     </View>
                                 </TouchableOpacity>
@@ -410,7 +412,7 @@ const Placeorder = () => {
                         <View style={styles.modalContent}>
                             <View style={tw`flex flex-row items-center justify-center`}>
                                 <TouchableOpacity onPress={() => setDetailsModal(false)}>
-                                    <RadixIcon name="minus" size={25} color="black" />
+                                <AntDesign name="minus" size={24} color="black" />
                                 </TouchableOpacity>
                             </View>
                             <View>
@@ -449,7 +451,7 @@ const Placeorder = () => {
                 </Modal>
                 <View style={tw`flex flex-row items-center p-2 gap-4 pb-5`}>
                     <TouchableOpacity onPress={() => router.back()}>
-                        <RadixIcon name="chevron-left" size={25} color="black" />
+                    <AntDesign name="left" size={24} color="black" />
                     </TouchableOpacity>
                     <Text style={tw`font-bold text-xl`}>Place order</Text>
                 </View>
@@ -471,19 +473,19 @@ const Placeorder = () => {
                     <View style={tw`mt-5 flex flex-col gap-4`}>
                         <TouchableOpacity onPress={() => setLocationModal(true)}>
                             <View style={tw`bg-[#F4F5FD] p-4 gap-4 flex flex-row items-center rounded-md`}>
-                                <RadixIcon name="sewing-pin" size={24} color="black" />
+                            <EvilIcons name="location" size={24} color="black" />
                                 <Text>Add Address</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setDetailsModal(true)}>
                             <View style={tw`bg-[#F4F5FD] p-4 gap-4 flex flex-row items-center rounded-md`}>
-                                <RadixIcon name="clipboard" size={24} color="black" />
+                            <Feather name="clipboard" size={24} color="black" />
                                 <Text>Add Details</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setModal(true)}>
                             <View style={tw`bg-[#F4F5FD] gap-4 p-4 flex flex-row items-center rounded-md`}>
-                                <RadixIcon name="camera" size={24} color="black" />
+                            <Feather name="camera" size={24} color="black" />
                                 <Text>Add Photos</Text>
                             </View>
                         </TouchableOpacity>

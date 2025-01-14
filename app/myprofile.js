@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity, Image, SafeAreaView, Alert, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
-import { RadixIcon } from "radix-ui-react-native-icons";
 import { useRouter } from "expo-router";
 import NavTitle from "./NavTitle";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { BASE } from './api/base';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const myprofile = () => {
 
@@ -72,7 +72,7 @@ const myprofile = () => {
               style={tw`w-16 h-16 mr-6`}
             ></Image>
             <View style={tw`pr-4`}>
-              <RadixIcon name="chevron-right" size={24} color="grey" />
+              <RadixIcon name="chevron-right" size={22} color="grey" />
             </View>
           </View>
         </TouchableOpacity> */}
@@ -83,7 +83,7 @@ const myprofile = () => {
           <Text style={tw`text-lg font-semibold `}>Name</Text>
           <View style={tw`pr-4 flex flex-row items-center`}>
             <Text>{!loading && user.name}</Text>
-            <RadixIcon name="chevron-right" size={24} color="grey" />
+            <AntDesign name="right" size={22} color="grey" style={tw`ml-2`}/>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -93,7 +93,7 @@ const myprofile = () => {
           <Text style={tw`text-lg font-semibold`}>Email</Text>
           <View style={tw`pr-4 flex flex-row items-center`}>
             <Text>{!loading && user.email}</Text>
-            <RadixIcon name="chevron-right" size={24} color="grey" />
+            <AntDesign name="right" size={22} color="grey" style={tw`ml-2`}/>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -104,7 +104,7 @@ const myprofile = () => {
           <View style={tw`flex flex-row items-center`}>
             <View style={tw`pr-4 flex flex-row items-center`}>
             <Text>{!loading && user.contact}</Text>
-            <RadixIcon name="chevron-right" size={24} color="grey" />
+            <AntDesign name="right" size={22} color="grey" style={tw`ml-2`}/>
           </View>
           </View>
         </TouchableOpacity>
@@ -115,7 +115,7 @@ const myprofile = () => {
           <Text style={tw`text-lg font-semibold`}>Gender</Text>
           <View style={tw`pr-4 flex flex-row items-center`}>
             <Text>{!loading && user.gender}</Text>
-            <RadixIcon name="chevron-right" size={24} color="grey" />
+            <AntDesign name="right" size={22} color="grey" style={tw`ml-2`}/>
           </View>
         </TouchableOpacity>
       </View> : <ActivityIndicator/>}

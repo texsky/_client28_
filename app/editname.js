@@ -8,8 +8,7 @@ import {
 import React from "react";
 import tw from "twrnc";
 import { useRouter } from "expo-router";
-import { RadixIcon } from "radix-ui-react-native-icons";
-
+import AntDesign from '@expo/vector-icons/AntDesign';
 const editname = () => {
   const router = useRouter();
   return (
@@ -18,8 +17,7 @@ const editname = () => {
         <View style={tw`flex flex-row items-center justify-between w-full bg-white px-4 py-4`}>
           <View style={tw`flex flex-row items-center justify-start bg-white`}>
             <TouchableOpacity onPress={() => router.back()}>
-              <RadixIcon name="chevron-left" size={24} color="black" />
-            </TouchableOpacity>
+            <AntDesign name="left" size={25} color="black" />            </TouchableOpacity>
             <Text style={tw`text-lg font-bold text-black ml-4`}>Edit Name</Text>
           </View>
           <TouchableOpacity style={tw`p-2 rounded-md bg-black`}>

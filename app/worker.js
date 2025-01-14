@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
 import tw from 'twrnc';
-import { RadixIcon } from 'radix-ui-react-native-icons';
 import MapView, { Marker } from 'react-native-maps';
 
 /**

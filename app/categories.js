@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, TouchableOpacity, Image, ScrollView, ActivityIndicator } from "react-native";
-import { RadixIcon } from "radix-ui-react-native-icons";
 import tw from "twrnc";
 import { router } from "expo-router";
 import { SimpleGrid } from 'react-native-super-grid';
 import axios from "axios";
 import { BASE } from "./api/base";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 
 /**
@@ -39,7 +39,7 @@ const Categories = () => {
             <SafeAreaView>
                 <View style={tw`flex flex-row items-center p-2 gap-4 pb-5`}>
                     <TouchableOpacity onPress={() => router.back()}>
-                        <RadixIcon name="chevron-left" size={25} color="black" />
+                    <AntDesign name="left" size={25} color="black" />
                     </TouchableOpacity>
                     <Text style={tw`font-bold text-xl`}>Categories</Text>
                 </View>

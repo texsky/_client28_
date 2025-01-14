@@ -1,7 +1,6 @@
 import { View, Text, Image, TouchableOpacity, Modal, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
-import { RadixIcon } from "radix-ui-react-native-icons";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import NavTitle from "./NavTitle";

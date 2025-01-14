@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Image, SafeAreaView, Text, TextInput, View, Platform, TouchableOpacity, ScrollView, Modal, ActivityIndicator, RefreshControl, Alert } from "react-native";
-import { RadixIcon } from 'radix-ui-react-native-icons';
 import tw from "twrnc";
 import { useRouter } from 'expo-router';
 import { SimpleGrid } from 'react-native-super-grid';
@@ -10,6 +9,9 @@ import { BASE } from "../api/base";
 import { signOut, getAuth } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "../firebase/firebase";
+import Feather from '@expo/vector-icons/Feather';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 /**
  * The Home screen of the app.
@@ -115,7 +117,7 @@ const Home = () => {
                         <View style={tw`p-5 flex flex-row items-center justify-between`}>
                             <Text style={tw`text-2xl`}>CLIENT 28</Text>
                             <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                <RadixIcon name="cross-2" size={24} color="black" />
+                                <Feather name="x" size={24} color="black" />
                             </TouchableOpacity>
                         </View>
                         <View style={tw`bg-[#F4F5FC] w-full h-full`}>
@@ -127,12 +129,12 @@ const Home = () => {
                                         router.push("myprofile");
                                     }}>
                                         <View style={tw`flex flex-row items-center gap-4`}>
-                                            <RadixIcon name="person" size={24} color="gray" />
+                                        <Feather name="user" size={24} color="gray" />
                                             <Text>My Profile</Text>
                                         </View>
                                     </TouchableOpacity>
                                     <View>
-                                        <RadixIcon name="chevron-right" size={24} color="gray" />
+                                        <AntDesign name="right" size={20} color="grey"/>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -142,11 +144,11 @@ const Home = () => {
                                     }}>
                                 <View style={tw`p-5 flex flex-row items-center justify-between bg-white mt-3`}>
                                     <View style={tw`flex flex-row items-center gap-4`}>
-                                        <RadixIcon name="chat-bubble" size={24} color="gray" />
+                                    <Feather name="message-square" size={24} color="gray" />
                                         <Text>Contact Us</Text>
                                     </View>
                                     <View>
-                                        <RadixIcon name="chevron-right" size={24} color="gray" />
+                                        <AntDesign name="right" size={20} color="grey"/>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -156,11 +158,11 @@ const Home = () => {
                                     }}>
                                 <View style={tw`p-5 flex flex-row items-center justify-between bg-white mt-3`}>
                                     <View style={tw`flex flex-row items-center gap-4`}>
-                                        <RadixIcon name="hand" size={24} color="gray" />
+                                    <FontAwesome name="hand-stop-o" size={24} color="gray" />
                                         <Text>Become a Worker</Text>
                                     </View>
                                     <View>
-                                        <RadixIcon name="chevron-right" size={24} color="gray" />
+                                        <AntDesign name="right" size={20} color="grey"/>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -170,25 +172,25 @@ const Home = () => {
                                     <Text>Register a Company</Text>
                                 </View>
                                 <View>
-                                    <RadixIcon name="chevron-right" size={24} color="gray" />
+                                    <AntDesign name="right" size={20} color="grey"/>
                                 </View>
                             </View> */}
                             <View style={tw`p-5 flex flex-row items-center justify-between bg-white mt-3`}>
                                 <View style={tw`flex flex-row items-center gap-4`}>
-                                    <RadixIcon name="share-1" size={24} color="gray" />
+                                <AntDesign name="sharealt" size={24} color="gray" />
                                     <Text>Share</Text>
                                 </View>
                                 <View>
-                                    <RadixIcon name="chevron-right" size={24} color="gray" />
+                                    <AntDesign name="right" size={20} color="grey"/>
                                 </View>
                             </View>
                             <View style={tw`p-5 flex flex-row items-center justify-between bg-white mt-3`}>
                                 <View style={tw`flex flex-row items-center gap-4`}>
-                                    <RadixIcon name="star" size={24} color="gray" />
+                                <Feather name="star" size={24} color="gray" />
                                     <Text>Rate</Text>
                                 </View>
                                 <View>
-                                    <RadixIcon name="chevron-right" size={24} color="gray" />
+                                    <AntDesign name="right" size={20} color="grey"/>
                                 </View>
                             </View>
                             <View style={tw`p-5 flex flex-row items-center justify-between bg-white mt-3`}>
@@ -196,12 +198,12 @@ const Home = () => {
                                     Logout();
                                 }}>
                                     <View style={tw`flex flex-row items-center gap-4`}>
-                                        <RadixIcon name="exit" size={24} color="gray" />
+                                    <Feather name="log-out" size={24} color="gray" />
                                         <Text>Logout</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <View>
-                                    <RadixIcon name="chevron-right" size={24} color="gray" />
+                                    <AntDesign name="right" size={20} color="grey"/>
                                 </View>
                             </View>
                         </View>
@@ -210,11 +212,11 @@ const Home = () => {
             </Modal>
             <View style={tw`${Platform.OS === "android" ? "h-30" : "h-52"} bg-[#CCFD01] flex flex-row items-center justify-between px-5`}>
                 <View style={tw`flex flex-row`}>
-                    <RadixIcon name="framer-logo" size={44} color="black" />
+                    <Feather name="framer" size={32} color="black" />
                     <Text style={tw`text-2xl font-bold`}>Radix</Text>
                 </View>
                 <TouchableOpacity onPress={() => setModalVisible(true)}>
-                    <RadixIcon name="hamburger-menu" size={24} color="black" />
+                    <Feather name="menu" size={25} color="black" />
                 </TouchableOpacity>
             </View>
             <View>
