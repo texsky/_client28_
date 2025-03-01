@@ -12,7 +12,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We need your location to provide better services."
-      }
+      },
+      "bundleIdentifier": "com.texsky.client28.org"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,7 +23,8 @@
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "package": "com.client28.org"
     },
     "web": {
       "bundler": "metro",
@@ -43,6 +45,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "3b0fd52c-bc49-4cdd-b41a-da1dc7106f62"
+      }
+    },
+    "owner": "vishwas.jsx"
   }
 }

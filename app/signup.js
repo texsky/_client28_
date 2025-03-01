@@ -17,15 +17,15 @@ const ProfileScreen = () => {
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('');
     const [gender, setGender] = useState('');
-    const [password,setPassword] = useState('');
-    const [worker,setWorker] = useState(false);
+    const [password, setPassword] = useState('');
+    const [is_worker, setis_worker] = useState(false);
 
 
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // Function to handle submit
     const handleSubmit = async () => {
-        
+
         if (!name || !email || !contact || !gender) {
             Alert.alert('Error', 'All fields except the image are required!');
             return;
@@ -39,7 +39,7 @@ const ProfileScreen = () => {
             email,
             contact,
             gender,
-            worker
+            is_worker,
             // Set image_url to an empty string if no image is selected
         };
 
@@ -47,16 +47,24 @@ const ProfileScreen = () => {
 
             const auth = getAuth(app);
 
-            const user = await createUserWithEmailAndPassword(auth,email,password);
+            const user = await createUserWithEmailAndPassword(auth, email, password);
 
             const formData = new FormData();
 
-            formData.append('ProfileClass', JSON.stringify({...profileData,uid:user.user.uid}));
+            formData.append('ProfileClass', JSON.stringify({ ...profileData, uid: user.user.uid }));
 
             // Send the POST request
-            const response = await axios.post(`${BASE}/Api/v1/save/profile`, formData);
+            // const response = await axios.post(`${BASE}/Api/v1/save/profile`, formData);
 
-            if (response.status === 200) {
+            const res = await fetch(`${BASE}/Api/v1/save/profile`, {
+                method: 'POST',
+                body:formData
+                },
+            );
+
+            const response = await res.json();
+            
+            if (response.status === "success") {
                 Alert.alert('Success', 'Profile saved successfully!',);
                 router.push("phone");
                 setLoading(false);
@@ -121,16 +129,16 @@ const ProfileScreen = () => {
                     style={styles.input}
                 />
                 <View style={tw`flex flex-row items-center gap-3 `}>
-                    <Checkbox onPress={e=>{
-                        setWorker(!worker);
-                    }} status={worker ? "checked" : "unchecked"} label="Register as a Worker"/>
-                    <TouchableOpacity onPress={()=>router.push("worker")}>
-                        <Text style={tw`text-black`}>Register as a Worker</Text>
+                    <Checkbox onPress={e => {
+                        setis_worker(!is_worker);
+                    }} status={is_worker ? "checked" : "unchecked"} label="Register as a is_worker" />
+                    <TouchableOpacity onPress={() => setis_worker(!is_worker)}>
+                        <Text style={tw`text-black`}>Register as a worker</Text>
                     </TouchableOpacity>
                 </View>
                 {!loading ? <TouchableOpacity style={tw`w-full p-3 bg-black rounded-md mt-3`} onPress={handleSubmit}>
                     <Text style={tw`text-white text-center`}>Sign up</Text>
-                </TouchableOpacity> : <ActivityIndicator/>}
+                </TouchableOpacity> : <ActivityIndicator />}
                 <Text style={tw`text-black text-xs mt-5 font-bold`}>OR</Text>
                 <TouchableOpacity
                     style={tw`w-[95%] mt-2 h-12 justify-center items-center rounded-lg`}

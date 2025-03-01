@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-native';
 import tw from "twrnc";
 import { BASE } from '../api/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 
 
@@ -54,6 +55,9 @@ export default function OrdersPage() {
     const [loading2,setLoading2] = useState(false);
     const [user,setUser] = useState();
 
+
+    const [Dialog,setDialog] = useState(false);
+
     /**
      * Fetches the orders from the server and updates the orders state.
      *
@@ -70,7 +74,9 @@ export default function OrdersPage() {
                 setUser(user);
                 const response = await fetch(`${BASE}/Api/v1/orders/${user.uid}`);
                 const data = await response.json();
+                console.log(data);
                 setOrders(data);
+                console.log(data);
             }else{
                 router.push('/phone');
             }
@@ -81,7 +87,7 @@ export default function OrdersPage() {
 
     useEffect(()=>{
         fetchOrders();
-    },[user]);
+    },[isPendingTabSelected]);
 
     const [isPendingTabSelected, setIsPendingTabSelected] = useState(true);
 
@@ -91,6 +97,8 @@ export default function OrdersPage() {
     ];
 
     const historyOrders = []
+
+    const [selectedOrder,setSelectedOrder] = useState([]);
     // [
     //   { title: 'Machine fitter needed. Machine fitter needed...', status: 'Confirmed', time: '2 hrs ago',  para:'Machine fitter needed. Machine fitter needed. ' },
     //   { title: 'Plumber needed for plumbing...', status: 'Cancelled', time: '2 hrs ago', para:'Machine fitter needed. Machine fitter needed. ' },
@@ -112,7 +120,35 @@ export default function OrdersPage() {
 
     return (
         <View style={styles.container}>
-
+            <Modal visible={Dialog} transparent animationType='slide'>
+                <View style={tw`w-full h-full`}>
+                    <View style={tw`w-[80%] h-[50%] bg-white mx-auto my-auto`}>
+                        <View style={tw`flex flex-row items-center justify-end p-2`}>
+                            <TouchableOpacity onPress={()=>{
+                                setDialog(false);
+                            }}>
+                                <AntDesign name="close" size={20} color="black" style={tw`font-bold`}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={tw`mt-3`}>
+                            <Text style={tw`text-center text-2xl font-bold`}>Order Details</Text>
+                            <View style={tw`flex flex-row items-center justify-between`}>
+                                <View style={tw`flex flex-col items-start justify-start p-3 gap-4`}>
+                                    <Text style={tw`font-bold`}>Order Id : <Text style={tw`font-normal`}>{selectedOrder.id && selectedOrder.id}</Text></Text>
+                                    <Text style={tw`font-bold`}>Category :  <Text style={tw`font-normal`}>{selectedOrder.category && selectedOrder.category}</Text></Text>
+                                    <Text style={tw`font-bold`}>Location : <Text style={tw`font-normal`}>{selectedOrder.location && selectedOrder.location}</Text></Text>
+                                </View>
+                            </View>
+                            <View style={tw``}>
+                                <Text style={tw`font-bold text-center text-2xl`}>OTP</Text>
+                                <View style={tw`w-[70%] border mx-auto border-gray-300 mt-2 p-4`}>
+                                    <Text style={tw`text-3xl font-bold text-center`}>{selectedOrder.otp && selectedOrder.otp}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
             <Text style={styles.header}>Orders</Text>
             {/* <Ionicons name="cart-outline" size={64} color="#007AFF" /> */}
             {(pendingOrders.length == 0) && (historyOrders.length == 0) ? <View style={styles.emptyContainer}>
@@ -155,7 +191,12 @@ export default function OrdersPage() {
                                 </Text>
                             </View> :
                                 !loading && orders.map((order, index) => (
-                                    order.pending === 1.0 && <OrderItem key={index} {...order} />
+                                    order.pending === 1.0 && <TouchableOpacity onPress={()=>{
+                                        setSelectedOrder(order);
+                                        setDialog(true);
+                                    }}>
+                                        <OrderItem key={index} {...order}/>
+                                    </TouchableOpacity>
                                 ))
                         ) : (
                             (orders.length === 0) ? <View style={styles.emptyContainer}>

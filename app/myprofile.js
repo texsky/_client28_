@@ -78,7 +78,7 @@ const myprofile = () => {
         </TouchableOpacity> */}
         <TouchableOpacity
           style={tw`flex flex-row justify-between pl-4 py-6 bg-white mt-1`}
-          onPress={() => router.push("editname")}
+          onPress={() => router.push(`editname?data=${encodeURI(JSON.stringify(user))}`)}
         >
           <Text style={tw`text-lg font-semibold `}>Name</Text>
           <View style={tw`pr-4 flex flex-row items-center`}>

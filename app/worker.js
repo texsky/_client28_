@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
 import tw from 'twrnc';
 import MapView, { Marker } from 'react-native-maps';
+import axios from 'axios';
+import { BASE } from './api/base';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { Actions } from './redux/store';
+import { router } from 'expo-router';
 
 /**
  * Renders a single order item with its details.
@@ -64,6 +71,10 @@ const Worker = () => {
 
     const [selectedTab, setSelectedTab] = useState("pending");
 
+    const dispatch = useDispatch();
+
+    const [worker, setWorker] = useState({});
+
     const [visible, setVisible] = useState(false);
 
     const [selectedOrder, setSelectedOrder] = useState({});
@@ -73,16 +84,33 @@ const Worker = () => {
         { category: 'Machine fitter needed. Machine fitter needed...', status: 'Assigned', time: '2 hrs ago', details: 'Machine fitter needed. Machine fitter needed. ', orderDate: '25-10-25', completed: 1.0 },
     ];
 
-
-    const CompleteOrder = () =>{
-        Alert.prompt("Enter OTP","Enter the Order OTP",[{text:"Verify",style:"default",onPress:(otp)=>{
-            if(otp === selectedOrder.otp){
-
-            }else{
-                Alert.alert("OTP Verification Failed !")
-            }
-        }}]);
+    const FetchData = async () => {
+        const worker = JSON.parse(await AsyncStorage.getItem('user'));
+        setWorker(worker);
+        console.log(worker);
+        
+        axios.get(`${BASE}/Api/v1/worker/orders/${worker.worker_uid}`).then((res) => {
+            console.log(res.data);
+        }).catch((e) => {
+            Alert.alert(e.message);
+        })
     }
+
+    const CompleteOrder = () => {
+        Alert.prompt("Enter OTP", "Enter the Order OTP", [{
+            text: "Verify", style: "default", onPress: (otp) => {
+                if (otp === selectedOrder.otp) {
+
+                } else {
+                    Alert.alert("OTP Verification Failed !")
+                }
+            }
+        }]);
+    }
+
+    useEffect(() => {
+        FetchData();
+    }, []);
 
     return (
         <View>
@@ -134,6 +162,17 @@ const Worker = () => {
                         setSelectedTab("completed");
                     }} style={tw`w-[40%]`}>
                         <Text style={tw`font-bold text-xl ${selectedTab === "completed" ? "border-b-2 border-blue-400 text-blue-600" : "border-b-2 border-gray-400 text-gray-500"} text-center`}>Completed</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={e => {
+                        Alert.alert("Confirm Logout", "Are you sure you want to logout ?", [{text:"Yes",onPress:async ()=>{
+                            await AsyncStorage.removeItem("user");
+                            await AsyncStorage.removeItem("auth");
+                            router.push("/phone");
+                        }},{text:"No",onPress:()=>{
+
+                        }}]);
+                    }} style={tw`w-[10%]`}>
+                        <Ionicons name='exit' size={30} color="red"/>
                     </TouchableOpacity>
                 </View>
                 <View style={tw`mt-4`}>

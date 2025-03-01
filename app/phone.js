@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, SafeAreaView, Alert, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, SafeAreaView, Alert, ActivityIndicator } from "react-native";
 import tw from "twrnc"; // Import Tailwind for React Native
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
@@ -8,6 +8,8 @@ import firebaseConfig from "./firebase/firebase";
 import { useDispatch } from "react-redux";
 import { Actions } from './redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
+import { BASE } from "./api/base";
 
 const PhoneNumberScreen = () => {
   const [Email, setEmail] = useState("");
@@ -26,12 +28,26 @@ const PhoneNumberScreen = () => {
       const auth = getAuth(app);
       const state = await signInWithEmailAndPassword(auth,Email,Password);
       if(state.user){
-        setLoading(false);
-        dispatch(Actions.setAuth(true));
-        dispatch(Actions.setUser(state.user));
-        await AsyncStorage.setItem('user', JSON.stringify(state.user));
-        await AsyncStorage.setItem('auth', JSON.stringify(true));
-        router.push("/home");
+        const usr = await axios.get(`${BASE}/Api/v1/get/profile/${state.user.uid}`,{withCredentials:true});
+        if(usr.data.is_worker && usr.data.worker_verified){
+          dispatch(Actions.setAuth(true));
+          dispatch(Actions.setUser(state.user));
+          await AsyncStorage.setItem('user', JSON.stringify(state.user));
+          await AsyncStorage.setItem('auth', JSON.stringify(true));
+          router.push(`/worker`);
+        }else if(usr.data.is_worker && !usr.data.worker_verified){
+          dispatch(Actions.setAuth(true));
+          dispatch(Actions.setUser(state.user));
+          await AsyncStorage.setItem('user', JSON.stringify(state.user));
+          await AsyncStorage.setItem('auth', JSON.stringify(true));
+          router.push(`/WorkerDetails?data=${encodeURIComponent(JSON.stringify(state.user))}`);
+        }else{
+          dispatch(Actions.setAuth(true));
+          dispatch(Actions.setUser(state.user));
+          await AsyncStorage.setItem('user', JSON.stringify(state.user));
+          await AsyncStorage.setItem('auth', JSON.stringify(true));
+          router.push("/home");
+        }
       }else{
         setLoading(false);
         Alert.alert("Login Failed");
@@ -39,6 +55,7 @@ const PhoneNumberScreen = () => {
     }catch(e){
       setLoading(false);
       Alert.alert(e.message);
+      console.log(e);
     }
   }
 
@@ -61,7 +78,7 @@ const PhoneNumberScreen = () => {
             onChangeText={txt => setEmail(txt)}
           />
         </View>
-        <Text style={tw`text-s text-gray-500 mt-4 mb-2 w-full`}>Enter Password</Text>
+        <Text style={tw`text-s text-gray-500 mb-2 w-full`}>Enter Password</Text>
         <View style={tw`flex-row justify-center items-center w-full  mb-5`}>
           <TextInput
             style={tw`flex-1 h-12 border border-gray-300 rounded-lg px-3 text-lg bg-white`}
